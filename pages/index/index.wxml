@@ -1,0 +1,34 @@
+<!--index.wxml-->
+<view class='index'>
+    <view class='index_top'>
+        <view class='menu' catchtap='addCity'>设置<!-- <text class='icon-close'  style="font-size:50px;color:red"></text> --></view>
+        <view>{{addr[current]}}</view>
+		<view></view>
+    </view>
+    <view class='main'>
+        <swiper bindchange='swiperHandle' current='{{current}}'>
+            <swiper-item wx:for='{{weatherData}}' wx:key='{{index}}'>
+                <scroll-view scroll-y>
+                    <view class='weatherDesc'>
+                        <text>{{item.currentWeather[0].weatherDesc}}</text>
+                        <text class='time'>{{item.time}}更新</text>
+                    </view>
+                    <view class='temperature'>{{item.temperature}}</view>
+                    <view class='pm25'><text>{{item.currentWeather[0].pm25}}</text></view>
+					<view class='originalData'>
+						<view class='date' wx:for='{{item.originalData.results[0].weather_data}}' wx:for-item='day' wx:key='{{index}}'>
+							<view>{{index==0?'今天':day.date}}</view>
+							<view>
+								<image mode='widthFix' src='{{day.dayPictureUrl}}'></image>
+								<image mode='widthFix' src='{{day.nightPictureUrl}}'></image>
+							</view>
+							<view>{{day.weather}}</view>
+							<view>{{day.temperature}}</view>
+							<view>{{day.wind}}</view>
+						</view>
+					</view>
+                </scroll-view>
+            </swiper-item>
+        </swiper>
+    </view>
+</view>

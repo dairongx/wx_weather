@@ -1,0 +1,93 @@
+/**index.wxss**/
+
+.index {
+    width: 100vw;
+    height: 100vh;
+}
+
+.index_top {
+    position: relative;
+    height: 100rpx;
+    line-height: 100rpx;
+    font-size: 36rpx;
+}
+
+.index_top view {
+    position: absolute;
+    top: 0;
+    text-align: center;
+    height: 100rpx;
+}
+
+.index_top view:nth-child(1) {
+    left: 30rpx;
+}
+
+.index_top view:nth-child(2) {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.main {
+	width: 100vw;
+    height: calc(100vh - 100rpx);
+    text-align: center;
+}
+
+.main swiper, .main swiper-item, .main scroll-view {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+.weatherDesc{
+	position: relative;
+	height: 80rpx;
+	line-height: 80rpx;
+	padding: 30rpx 0 0;
+	font-size: 32rpx;
+}
+
+.weatherDesc text{
+	position: absolute;
+	top: 0;
+	height: 80rpx;
+}
+.weatherDesc text:nth-child(1){
+	left: 50%;
+	transform: translateX(-50%);
+}
+.weatherDesc text:nth-child(2){
+	right: 30rpx;
+	font-size: 28rpx;
+}
+
+.temperature{
+	line-height: 150rpx;
+	font-size: 68rpx;
+	padding-bottom: 30rpx;
+}
+
+.pm25 text{
+	display: inline-block;
+	padding: 6rpx 20rpx;
+	background-color: rgba(0,0,0,.3);
+	border-radius: 30rpx;
+	font-size: 30rpx;
+	color: #fff;
+}
+
+.originalData{
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.originalData .date{
+	flex: 1;
+	font-size: 30rpx;
+}
+.originalData .date image{
+	width: 60rpx;
+}

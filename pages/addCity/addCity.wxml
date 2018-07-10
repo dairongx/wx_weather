@@ -1,0 +1,14 @@
+<!--pages/addCity/addCity.wxml-->
+<view class='addCity'>
+  <view wx:for='{{addr}}' wx:key='{{index}}'>{{item}}</view>
+  <button bindtap='toggle'>添加</button>
+  <view class='add' wx:if='{{flag}}'>
+    <input type='text' value='{{city}}' placeholder='搜索城市' bindblur='inputCity'/>
+    <picker mode="region" bindchange="bindRegionChange" value="{{city}}" custom-item="{{customItem}}">
+      <view class="picker">
+        选择城市：{{city[0]}}{{city[1]}}{{city[2]}}
+      </view>
+    </picker>
+    <button bindtap='addcity'>确定</button>
+  </view>
+</view>
