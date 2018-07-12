@@ -1,0 +1,7 @@
+<!--pages/setting/setting.wxml-->
+<scroll-view scroll-y>
+   <view class='list'>
+    <text>屏幕亮度</text>
+    <slider value='{{ScreenBrightness}}' bindchanging='changeHandle' show-value='{{true}}' block-size='12'></slider>
+   </view>
+</scroll-view>

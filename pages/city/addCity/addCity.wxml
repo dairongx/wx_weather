@@ -1,0 +1,11 @@
+<!--pages/city/addCity/addCity.wxml-->
+<view class='add'>
+  <input type='text' value='{{city}}' placeholder='搜索城市' bindblur='inputCity' />
+  <view class='searchList' wx:if='{{searchList.length>0}}'>
+    <block>
+      <text wx:for='{{searchList}}' wx:key='index' data-name='{{item.name}}' bindtap='chooseCity'>{{item.name}}</text>
+    </block>
+    <view class='clear' bindtap='clear'><text>清除历史记录</text></view>
+  </view>
+  <button class='btn_add' bindtap='addcity'>确定</button>
+</view>

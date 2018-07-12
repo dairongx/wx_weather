@@ -33,7 +33,26 @@
 		},
 		"miniprogram": {
 			"current": -1,
-			"list": []
+			"list": [
+				{
+					"id": -1,
+					"name": "authorize",
+					"pathName": "pages/authorize/index",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "set",
+					"pathName": "pages/setting/setting",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "about",
+					"pathName": "pages/about/about",
+					"query": ""
+				}
+			]
 		}
 	}
 }

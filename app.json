@@ -2,12 +2,15 @@
   "pages":[
     "pages/index/index",
     "pages/authorize/index",
-    "pages/addCity/addCity"
+    "pages/city/city",
+    "pages/city/addCity/addCity",
+    "pages/setting/setting",
+    "pages/about/about"
   ],
   "window":{
-    "backgroundTextStyle":"light",
+    "backgroundTextStyle":"dark",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
+    "navigationBarTitleText": "Weather",
     "navigationBarTextStyle":"black"
   }
 }

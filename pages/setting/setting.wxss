@@ -1,0 +1,22 @@
+/* pages/setting/setting.wxss */
+scroll-view{
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.list{
+  padding: 0 30rpx;
+  font-size: 32rpx;
+  color: #333;
+  margin-bottom: 30rpx; 
+}
+
+.list text{
+  display: block;
+  line-height: 80rpx;
+}
+
+.list text:first-child{
+  border-bottom: 1px solid #e2e2e2;
+}

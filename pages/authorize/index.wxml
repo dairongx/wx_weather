@@ -1,3 +1,5 @@
 <!--pages/authorize/index.wxml-->
-<text>需要授权才能使用</text>
-<button open-type='openSetting' bindopensetting='authorize'>立即授权</button>
+<view class='authorize'>
+  <text>需要授权才能使用</text>
+  <button open-type='openSetting' bindopensetting='authorize'>立即授权</button>
+</view>

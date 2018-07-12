@@ -1,1 +1,21 @@
 /* pages/authorize/index.wxss */
+.authorize{
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  background-color: #f0eff4;
+}
+
+.authorize text{
+  display: block;
+  padding: 180rpx 0 100rpx;
+  font-size: 34rpx;
+  color: #333;
+} 
+
+.authorize button{
+  width: 90%;
+  font-size: 38rpx;
+  background-color: #f96b29;
+  color: #fff; 
+}

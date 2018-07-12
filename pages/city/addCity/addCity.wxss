@@ -1,0 +1,63 @@
+/* pages/city/addCity/addCity.wxss */
+
+.add {
+  width: 100vw;
+  height: 100vh;
+}
+
+.add input {
+  width: 90%;
+  border: 0;
+  height: 80rpx;
+  border-bottom: 1px solid #e2e2e2;
+  padding-left: 30rpx;
+  font-size: 32rpx;
+  margin: 30rpx auto;
+  color: #333;
+}
+
+.btn_add {
+  width: 90%;
+  font-size: 38rpx;
+  background-color: #f96b29;
+  color: #fff;
+  margin: 120rpx auto 0;
+}
+
+.searchList {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: center;
+  flex-wrap: wrap;
+}
+
+.searchList>text {
+  display: block;
+  padding: 0 30rpx;
+  margin: 0 30rpx;
+  text-align: center;
+  line-height: 45rpx;
+  font-size: 28rpx;
+  color: #666;
+  border: 1px solid #e2e2e2;
+  margin-bottom: 20rpx;
+  border-radius: 5rpx;
+}
+
+.clear {
+  width: 100%;
+  text-align: center;
+  line-height: 60rpx;
+  color: #333;
+  font-size: 30rpx;
+  margin-top: 25rpx; 
+  border: 0;
+}
+
+.clear text {
+  display: inline-block;
+  padding: 0 50rpx;
+  border: 1px solid #e2e2e2;
+  border-radius: 5rpx;
+}

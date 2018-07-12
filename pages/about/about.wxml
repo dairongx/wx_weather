@@ -1,0 +1,11 @@
+<!--pages/about/about.wxml-->
+<scroll-view scroll-y>
+  <view class='list'>
+    <text>数据来源：</text>
+    <text>百度地图微信小程序JSAPI服务</text>
+  </view>
+  <view class='list'>
+    <text>界面样式：</text>
+    <text>Pure天气</text>
+  </view>
+</scroll-view>

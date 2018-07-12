@@ -1,0 +1,57 @@
+/* pages/addCity/addCity.wxss */
+
+.addCity {
+  width: 100vw;
+  height: 98vh;
+  padding-top: 2vh;
+  overflow: hidden;
+}
+
+.cityList {
+  position: relative;
+  width: 98vw;
+  height: 120rpx;
+  line-height: 120rpx;
+  padding-left: 2vw;
+  border-top: 1px solid #e2e2e2;
+  transition: all .5 ease;
+}
+
+.cityList:last-child {
+  border-bottom: 1px solid #e2e2e2;
+}
+
+/* .cityList .del {
+  position: absolute;
+  top: 23rpx;
+  right: 30rpx;
+  width: 30px;
+} */
+
+/* .del image{
+  width: 100%;
+} */
+
+.cityList .del {
+  position: absolute;
+  top: 0;
+  right: -80px;
+  width: 80px;
+  text-align: center;
+  font-size: 38rpx;
+  line-height: 120rpx;
+  background-color: #ef4f4f;
+  color: #fff;
+}
+
+.cityList .del.disable {
+  background-color: #ccc;
+}
+
+.btn_add {
+  width: 90%;
+  font-size: 38rpx;
+  background-color: #f96b29;
+  color: #fff;
+  margin: 120rpx auto 0;
+}
