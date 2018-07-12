@@ -30,6 +30,6 @@ App({
   },
   globalData: {
     userInfo: null,
-    ak: 'MDAXl2e8z0suEvdSTSTNadQjK1KgVps7'
+    ak: '百度地图ak'
   }
 })
