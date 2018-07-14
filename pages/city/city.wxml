@@ -1,12 +1,9 @@
 <!--pages/addCity/addCity.wxml-->
-<scroll-view scroll-y class='addCity'>
-  <view>
-    <view class='cityList' wx:for='{{addr}}' wx:key='{{index}}' data-index='{{index}}' bindtouchstart='touchStart' bindtouchmove='touchMove' bindtouchend='touchEnd' bindtouchcancel='touchCancel' style="transform: translateX(-{{listIndex==index?translateX:0}}px);">
+<scroll-view scroll-y class='addCity' bindtap='touchcancel'>
+  <view id='list'>
+    <view class='cityList' wx:for='{{addr}}' wx:key='{{index}}' data-index='{{index}}' bindtouchstart='touchStart' bindtouchmove='touchMove' bindtouchend='touchEnd' bindtouchcancel='touchCancel' bindtap='cancel' style="transform: translateX(-{{listIndex==index?translateX:0}}px);">
       <view>{{item}}</view>
-      <!-- <view wx:if='{{index!=0}}' class="del" data-index='{{index}}' bindtap='delcity'>
-        <image mode='widthFix' src='/img/del.png'></image>
-      </view> -->
-      <view class="del {{index==0?'disable':''}}" data-index='{{index}}' bindtap='delcity'>删除</view>
+      <view class="del {{index==0?'disable':''}}" data-index='{{index}}' catchtap='delcity'>删除</view>
     </view>
   </view>
   <button class='btn_add' bindtap='addcity' disabled='{{addr.length>=10}}'>{{addr.length>=10?'最多添加10个城市':'添加'}}</button>
