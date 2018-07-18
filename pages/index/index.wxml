@@ -5,6 +5,9 @@
       <text class='iconfont icon-caidan'></text>
     </view>
     <view>{{addr[current]}}</view>
+    <view>
+      <text class="iconfont icon-search" catchtap='showSearch'></text>
+    </view>
   </view>
   <view class='dots' wx:if='{{weatherData.length>1&&show}}'>
     <text wx:for='{{weatherData.length}}' wx:key='{{index}}' class="dot {{index==current?' on ':' '}}"></text>
@@ -79,5 +82,74 @@
         </view>
       </view>
     </view>
+  </view>
+
+  <view class="search {{search?'on':''}}">
+     <view class='search_top'>
+      <text class='iconfont icon-fanhui' bindtap='back'></text>
+      <text>搜索城市</text>
+    </view>
+    <view class='searchInput'>
+      <input type='text' placeholder='搜索城市' placeholder-style='font-size: 30rpx;' value='{{city}}' catchblur='inputCity'></input>
+      <text class='iconfont icon-search' catchtap='searchCity'></text>
+    </view>
+    <view class='searchList' wx:if='{{searchList.length>0}}'>
+      <block>
+        <text wx:for='{{searchList}}' wx:key='index' data-name='{{item.name}}' bindtap='chooseCity'>{{item.name}}</text>
+      </block>
+      <view class='clear' bindtap='clear'>
+        <text>清除历史记录</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="search_weather {{SWeather?'on':''}} {{searchBg?'searchBg':''}}">
+    <view class='search_top'>
+      <text class='iconfont icon-fanhui' bindtap='back'></text>
+      <text>{{city}}</text>
+    </view>
+    <scroll-view scroll-y bindscroll='scrollHandle'>
+      <view class='weatherDesc'>
+        <text>{{searchData.currentWeather[0].weatherDesc}}</text>
+        <text class='time'>{{searchData.time}}更新</text>
+      </view>
+      <view class='temperature'>{{searchData.temperature}}</view>
+      <view class='pm25'>
+        <text>{{searchData.currentWeather[0].pm25}}</text>
+      </view>
+
+      <view class='originalData'>
+        <view class='date' wx:for='{{searchData.originalData.results[0].weather_data}}' wx:for-item='day' wx:for-index='index2' wx:key='{{index2}}'>
+          <view>{{index2==0?'今天':day.date}}</view>
+          <view>
+            <image mode='widthFix' src='{{day.dayPictureUrl}}'></image>
+            <image mode='widthFix' src='{{day.nightPictureUrl}}'></image>
+          </view>
+          <view>{{day.weather}}</view>
+          <view>{{day.temperature}}</view>
+          <view>{{day.wind}}</view>
+        </view>
+      </view>
+
+      <view class='pt'>
+        <view class='pttitle'>生活指数</view>
+        <view>
+          <view class='pt_main' wx:for='{{searchData.originalData.results[0].index}}' wx:for-item='pt' wx:for-index='index3' wx:key='{{index3}}'>
+            <view class='pt_left'>
+              <text class="iconfont {{ptTitle[index3]}}"></text>
+            </view>
+            <view class='pt_right'>
+              <view>
+                <text>{{pt.tipt}}</text>
+                <text>{{pt.zs}}</text>
+              </view>
+              <view>{{pt.des}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class='map'>数据来源：百度地图微信小程序JSAPI服务</view>
+    </scroll-view>
   </view>
 </view>

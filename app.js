@@ -28,8 +28,25 @@ App({
       }
     })
   },
+  // 将城市名转换成坐标
+  getGeocoder(addr) {
+    let that = this
+    return new Promise((resolve, reject) => {
+      wx.request({
+        url: `https://api.map.baidu.com/geocoder/v2/?address=${addr}&output=json&ak=${that.globalData.ak}`,
+        success(res) {
+          if (res.errMsg == 'request:ok') {
+            let location = `${res.data.result.location.lng},${res.data.result.location.lat}`
+            resolve(location)
+          } else {
+            reject(res.errMsg)
+          }
+        }
+      })
+    })
+  },
   globalData: {
     userInfo: null,
-	ak: '百度地图ak'
+    ak: 'MDAXl2e8z0suEvdSTSTNadQjK1KgVps7'
   }
 })

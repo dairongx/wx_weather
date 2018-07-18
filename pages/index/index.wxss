@@ -51,6 +51,14 @@
   transform: translateX(-50%);
 }
 
+.index_top view:nth-child(3) {
+  width: 80rpx;
+  top: -2rpx;
+  right: 38rpx;
+  text-align: center;
+  font-size: 36rpx;
+}
+
 .index .dots {
   position: absolute;
   top: 100rpx;
@@ -225,10 +233,6 @@
   padding: 30rpx 0;
 }
 
-.icon-caidan{
-	font-size: 40rpx;
-}
-
 .pt .icon-chuanyizhishu {
   font-size: 60rpx;
 }
@@ -288,4 +292,128 @@
 
 .menu_list>view text:first-child {
   margin-right: 10rpx;
+}
+
+.search {
+  position: fixed;
+  top: 100vh;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0;
+  background-color: #fff;
+  transition: all 0.3s;
+  color: #333;
+  font-size: 36rpx;
+  overflow: hidden;
+  z-index: 999;
+}
+
+.search.on {
+  top: 0;
+  opacity: 1;
+}
+
+.searchInput {
+  position: relative;
+  font-size: 30rpx;
+  border-radius: 10rpx;
+  padding: 30rpx 30rpx 0;
+}
+
+.searchInput input {
+  padding-left: 20rpx;
+  border-bottom: 1px solid #e2e2e2;
+}
+
+.searchInput text {
+  position: absolute;
+  right: 50rpx;
+  top: 30rpx;
+  width: 80rpx;
+  height: 60rpx;
+  text-align: center;
+  z-index: 1000;
+}
+
+.searchList {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: center;
+  flex-wrap: wrap;
+  margin-top: 20rpx;
+}
+
+.searchList>text {
+  display: block;
+  padding: 0 30rpx;
+  margin: 0 30rpx;
+  text-align: center;
+  line-height: 45rpx;
+  font-size: 28rpx;
+  color: #666;
+  border: 1px solid #e2e2e2;
+  margin-bottom: 20rpx;
+  border-radius: 5rpx;
+}
+
+.clear {
+  width: 100%;
+  text-align: center;
+  line-height: 60rpx;
+  color: #333;
+  font-size: 30rpx;
+  margin-top: 25rpx;
+  border: 0;
+}
+
+.clear text {
+  display: inline-block;
+  padding: 0 50rpx;
+  border: 1px solid #e2e2e2;
+  border-radius: 5rpx;
+}
+
+.search_weather {
+  position: fixed;
+  top: -100vh;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  color: #fff;
+  font-size: 36rpx;
+  transition: all 0.3s;
+  text-align: center;
+  background-image: linear-gradient(#50b4e6, #339ee6);
+  z-index: 999;
+}
+
+.search_weather.on {
+  top: 0;
+}
+.search_top{
+  width: 100%;
+  height: 100rpx;
+}
+.search_top text:first-child{
+  position: absolute;
+  top: 0;
+  left: 30rpx;
+  width: 80rpx;
+  height: 100rpx;
+}
+.search_weather scroll-view{
+  width: 100vw;
+  height: calc(100vh - 100rpx);
+  overflow: hidden;
+}
+
+.search_top {
+  line-height: 100rpx;
+  text-align: center;
 }

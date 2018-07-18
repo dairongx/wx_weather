@@ -19,30 +19,11 @@ Page({
     this.setData({
       addr: JSON.parse(options.addr)
     })
-    this.getSearchList()
   },
 
   onUnload() {
     getCurrentPages()[1].add(this.data.addr)
   },
-
-  // 将城市名转换成坐标
-  getGeocoder(addr) {
-    return new Promise((resolve, reject) => {
-      wx.request({
-        url: `https://api.map.baidu.com/geocoder/v2/?address=${addr}&output=json&ak=${app.globalData.ak}`,
-        success(res) {
-          if (res.errMsg == 'request:ok') {
-            let location = `${res.data.result.location.lng},${res.data.result.location.lat}`
-            resolve(location)
-          } else {
-            reject(res.errMsg)
-          }
-        }
-      })
-    })
-  },
-
 
   // 输入地址
   inputCity(e) {
@@ -82,7 +63,7 @@ Page({
     let that = this
     let city = this.data.city
     if (city) {
-      that.getGeocoder(city).then(location => {
+      app.getGeocoder(city).then(location => {
         if (location) {
           wx.getStorage({
             key: 'location',
@@ -97,7 +78,6 @@ Page({
                 that.setData({
                   addr: that.data.addr.concat(city)
                 })
-                that.search(city)
                 wx.navigateBack({})
               } else {
                 wx.showToast({
@@ -122,92 +102,4 @@ Page({
       })
     }
   },
-
-  // 添加搜索记录
-  search(city) {
-    wx.getStorage({
-      key: 'search',
-      success: function(res) {
-        let citys = res.data
-        if (citys[city]) {
-          citys[city].count++
-        } else {
-          citys[city] = {
-            count: 1
-          }
-        }
-        wx.setStorage({
-          key: 'search',
-          data: citys,
-        })
-      },
-      fail: function() {
-        wx.setStorage({
-          key: 'search',
-          data: {
-            [city]: {
-              count: 1
-            }
-          },
-        })
-      }
-    })
-  },
-
-  // 获取搜索记录,并按搜索次数进行排序
-  getSearchList() {
-    let that = this;
-    wx.getStorage({
-      key: 'search',
-      success: function(res) {
-        if (res.data) {
-          let list = []
-          for (let i in res.data) {
-            list.push({
-              name: i,
-              count: res.data[i].count
-            })
-          }
-          list = list.sort((a, b) => b.count - a.count)
-          that.setData({
-            searchList: list
-          })
-        }
-      },
-      fail: function(err) {
-        that.setData({
-          searchList: []
-        })
-      }
-    })
-  },
-
-  // 点击搜索记录
-  chooseCity(e){
-    let city = e.currentTarget.dataset.name
-    this.setData({
-      city: city
-    })
-  },
-
-  // 清除历史记录
-  clear(){
-    let that = this
-    wx.showModal({
-      title: '提示',
-      content: '确定清除历史记录',
-      success:function(res){
-        if(res.confirm){
-          wx.removeStorage({
-            key: 'search',
-            success: function () {
-              that.setData({
-                searchList: []
-              })
-            }
-          })
-        }
-      }
-    })
-  }
 })

@@ -5,17 +5,23 @@ const app = getApp()
 
 Page({
   data: {
-    weatherData: [],
+    weatherData: [],  // 天气数据
     weatherList: [],
-    addr: [],
-    bg: [],
-    location: [],
+    addr: [],     // 所以地址
+    bg: [],        // 背景
+    location: [],   
     current: 0,
     ptTitle: ['icon-chuanyizhishu', 'icon-xichezhishu', 'icon-ganmaozhishu', 'icon-yundongzhishu', 'icon-fangshaizhishu'],
     show: true,
     animationData: {},
     imgSrc: '',
-    hidden: false
+    hidden: false,
+    search: false,
+    SWeather: false,
+    city: '',
+    searchData: '',
+    searchBg: '',
+    
   },
 
   onLoad() {
@@ -44,9 +50,10 @@ Page({
         that.getData()
       }
     })
+    that.getSearchList()
   },
 
-  onHide(){
+  onHide() {
     this.closeMenu('close')
   },
 
@@ -62,7 +69,14 @@ Page({
               location: res.data
             })
             let pro = res.data.map(item => {
-              return that.mapWeather(item)
+              return (that.mapWeather(item).then(data => {
+                data.res.time = new Date().toTimeString().slice(0, 5)
+                data.res.temperature = data.res.currentWeather[0].date.split('：')[1].split(')')[0]
+                data.res.location = data.location;
+                that.setData({
+                  weatherList: that.data.weatherList.concat(data.res),
+                })
+              }))
             })
             Promise.all(pro).then(() => {
               that.getWeatherData()
@@ -83,7 +97,6 @@ Page({
     let BMap = new bmap.BMapWX({
       ak: app.globalData.ak
     });
-    // 发起weather请求 
     return new Promise((resolve, reject) => {
       BMap.weather({
         location: location,
@@ -91,13 +104,11 @@ Page({
           reject(data)
         },
         success: function(res) {
-          res.time = new Date().toTimeString().slice(0, 5)
-          res.temperature = res.currentWeather[0].date.split('：')[1].split(')')[0]
-          res.location = location;
-          that.setData({
-            weatherList: that.data.weatherList.concat(res),
-          })
-          resolve()
+          let data = {
+            res: res,
+            location: location
+          }
+          resolve(data)
         }
       });
     })
@@ -196,20 +207,15 @@ Page({
   pm25(pm) {
     if (pm < 50) {
       return '优'
-    }
-    if (pm > 50 && pm < 100) {
+    } else if (pm < 100) {
       return '良'
-    }
-    if (pm > 100 && pm < 150) {
+    } else if (pm < 150) {
       return '轻度污染'
-    }
-    if (pm > 150 && pm < 200) {
+    } else if (pm < 200) {
       return '中度污染'
-    }
-    if (pm > 200 && pm < 300) {
+    } else if (pm < 300) {
       return '重度污染'
-    }
-    if (pm > 300) {
+    } else if (pm > 300) {
       return '严重污染'
     }
   },
@@ -221,29 +227,21 @@ Page({
       location = that.data.location,
       bg = that.data.bg,
       weatherData = that.data.weatherData;
-    let BMap = new bmap.BMapWX({
-      ak: app.globalData.ak
-    });
-    BMap.weather({
-      location: location[current],
-      fail: function(data) {
-        console.log(data)
-      },
-      success: function(res) {
-        res.time = new Date().toTimeString().slice(0, 5)
-        res.temperature = res.currentWeather[0].date.split('：')[1].split(')')[0]
-        res.location = location;
-        let pm25 = res.currentWeather[0].pm25
-        res.currentWeather[0].pm25 = that.pm25(pm25) + pm25
-        weatherData.splice(current, 1, res)
-        bg.splice(current, 1, that.bgChange(res.currentWeather[0].weatherDesc))
-        that.setData({
-          weatherData: weatherData,
-          bg: bg
-        })
-        wx.stopPullDownRefresh()
-      }
-    });
+
+    that.mapWeather(location[current]).then(data => {
+      data.res.time = new Date().toTimeString().slice(0, 5)
+      data.res.temperature = data.res.currentWeather[0].date.split('：')[1].split(')')[0]
+      data.res.location = data.location;
+      let pm25 = data.res.currentWeather[0].pm25
+      data.res.currentWeather[0].pm25 = that.pm25(pm25) + pm25
+      weatherData.splice(current, 1, data.res)
+      bg.splice(current, 1, that.bgChange(data.res.currentWeather[0].weatherDesc))
+      that.setData({
+        weatherData: weatherData,
+        bg: bg
+      })
+      wx.stopPullDownRefresh()
+    })
   },
 
   // scroll-view滚动事件
@@ -330,6 +328,182 @@ Page({
   about() {
     wx.navigateTo({
       url: '/pages/about/about'
+    })
+  },
+
+  // 显示search input
+  showSearch() {
+    this.setData({
+      search: true
+    })
+  },
+
+  // 隐藏search input
+  hideSearch() {
+    this.setData({
+      search: false
+    })
+  },
+
+  // input 输入
+  inputCity(e) {
+    let that = this
+    let reg = new RegExp('^[\u4E00-\u9FA5]+$')
+    let city = e.detail.value
+    if (!city.trim()) return
+    if (reg.test(city)) {
+      this.setData({
+        city: e.detail.value
+      })
+    } else {
+      wx.showToast({
+        title: '输入有误',
+        icon: 'none',
+        duration: 1500
+      })
+      this.setData({
+        city: ''
+      })
+    }
+  },
+
+  // 搜索
+  searchCity() {
+    let that = this
+    let city = that.data.city
+    if (city) {
+      app.getGeocoder(city).then(location => {
+        if (location) {
+          that.mapWeather().then(data=>{
+            data.res.time = new Date().toTimeString().slice(0, 5)
+            data.res.temperature = data.res.currentWeather[0].date.split('：')[1].split(')')[0]
+            let pm25 = data.res.currentWeather[0].pm25
+            data.res.currentWeather[0].pm25 = that.pm25(pm25) + pm25
+            let bg = that.bgChange(data.res.currentWeather[0].weatherDesc)
+            that.setData({
+              searchData: data.res,
+              searchBg: bg,
+              SWeather: true,
+              search: false
+            })
+          })
+          that.search(city)
+        }
+      }).catch(err => {
+        console.log(err)
+        wx.showToast({
+          title: '错误的地名',
+          icon: 'none',
+          duration: 1500
+        })
+      })
+    } else {
+      wx.showToast({
+        title: '输入有误',
+        icon: 'none',
+        duration: 1500
+      })
+      this.setData({
+        city: ''
+      })
+    }
+  },
+
+  // 添加搜索记录
+  search(city) {
+    wx.getStorage({
+      key: 'search',
+      success: function(res) {
+        let citys = res.data
+        if (citys[city]) {
+          citys[city].count++
+        } else {
+          citys[city] = {
+            count: 1
+          }
+        }
+        wx.setStorage({
+          key: 'search',
+          data: citys,
+        })
+      },
+      fail: function() {
+        wx.setStorage({
+          key: 'search',
+          data: {
+            [city]: {
+              count: 1
+            }
+          },
+        })
+      }
+    })
+  },
+
+  // 获取搜索记录,并按搜索次数进行排序
+  getSearchList() {
+    let that = this;
+    wx.getStorage({
+      key: 'search',
+      success: function(res) {
+        if (res.data) {
+          let list = []
+          for (let i in res.data) {
+            list.push({
+              name: i,
+              count: res.data[i].count
+            })
+          }
+          list = list.sort((a, b) => b.count - a.count)
+          that.setData({
+            searchList: list
+          })
+        }
+      },
+      fail: function(err) {
+        that.setData({
+          searchList: []
+        })
+      }
+    })
+  },
+
+  // 点击搜索记录
+  chooseCity(e) {
+    let city = e.currentTarget.dataset.name
+    this.setData({
+      city: city
+    })
+  },
+
+  // 清除历史记录
+  clear() {
+    let that = this
+    wx.showModal({
+      title: '提示',
+      content: '确定清除历史记录',
+      success: function(res) {
+        if (res.confirm) {
+          wx.removeStorage({
+            key: 'search',
+            success: function() {
+              that.setData({
+                searchList: []
+              })
+            }
+          })
+        }
+      }
+    })
+  },
+
+  //
+  back(){
+    this.setData({
+      SWeather: false,
+      search: false,
+      city: '',
+      searchBg: ''
     })
   }
 })

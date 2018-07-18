@@ -13,6 +13,7 @@
   height: 120rpx;
   line-height: 120rpx;
   padding-left: 2vw;
+  font-size: 38rpx;
   border-top: 1px solid #e2e2e2;
   transition: all .5 ease;
 }
